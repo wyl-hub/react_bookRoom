@@ -4,8 +4,8 @@ function Layout() {
   return (
     <div>
       <div>Layout hhh</div>
-      <Link to="/aaa">Login</Link>
-      <Link to="/bbb">Update</Link>
+      <Link to="/login">Login</Link>
+      <Link to="/register">Register</Link>
       <div>
         <Outlet />
       </div>

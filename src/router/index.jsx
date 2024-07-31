@@ -1,6 +1,7 @@
 import Layout from "../components/Layout";
 import ErrorPage from "../pages/ErrorPage";
 import Login from "../pages/Login";
+import Register from "../pages/Register";
 import UpdateInfo from "../pages/UpdateInfo";
 
 
@@ -11,12 +12,12 @@ const routes = [
       errorElement: <ErrorPage/>,
       children: [
         {
-          path: "aaa",
+          path: "login",
           element: <Login />,
         },
         {
-          path: "bbb",
-          element: <UpdateInfo />,
+          path: "register",
+          element: <Register />,
         }    
       ],
     }
