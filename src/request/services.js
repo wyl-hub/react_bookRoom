@@ -8,6 +8,14 @@ export async function register(body) {
   return await request.post('/user/register', body)
 }
 
+export async function info() {
+  return await request.get('/user/info')
+}
+
+export async function update(body) {
+  return await request.post('/user/update', body)
+}
+
 export async function upload(file) {
   const formData = new FormData()
   formData.append('file', file)

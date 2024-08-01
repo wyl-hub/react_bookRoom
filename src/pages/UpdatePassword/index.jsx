@@ -11,16 +11,20 @@ const layout1 = {
   wrapperCol: { span: 18 },
 }
 
+const layout2 = {
+  labelCol: { span: 0 },
+  wrapperCol: { span: 10 },
+}
 export default function UpdatePassword() {
   const [form] = useForm()
   const navigate = useNavigate()
 
   const onFinish = useCallback(async (values) => {
     const res = await updatePassword(values)
-    if (res.message === 'success') {
+    if (res.message === "success") {
       setTimeout(() => {
-        navigate('/login')
-      }, 1000);
+        navigate("/login")
+      }, 1000)
     }
   }, [])
 
@@ -34,7 +38,6 @@ export default function UpdatePassword() {
 
   return (
     <div id="updatePassword-container">
-      <h1>会议室预订系统</h1>
       <Form
         form={form}
         {...layout1}
@@ -79,7 +82,11 @@ export default function UpdatePassword() {
           </Form.Item>
           <SecondDown onComplete={getCaptcha} />
         </div>
-
+        <Form.Item {...layout2}>
+          <div className="links">
+            <Link to="/updateInfo">修改信息</Link>
+          </div>
+        </Form.Item>
         <Form.Item {...layout1} label=" ">
           <Button className="btn" type="primary" htmlType="submit">
             修改

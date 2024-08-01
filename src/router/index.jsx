@@ -14,6 +14,10 @@ const routes = [
       {
         path: '/updateInfo',
         element: <UpdateInfo />
+      },
+      {
+        path: '/updatePassword',
+        element: <UpdatePassword />
       }
     ],
   },

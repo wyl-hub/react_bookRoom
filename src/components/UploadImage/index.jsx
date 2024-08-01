@@ -55,10 +55,12 @@ export default function UploadImage({ onUpload, imgUrl }) {
         {imgUrl ? (
           <img
             src={imgUrl}
-            alt="avatar"
+            alt="404"
             style={{
               width: "100%",
-              borderRadius: '50%'
+              height: '100%',
+              borderRadius: '50%',
+              objectFit: 'cover'
             }}
           />
         ) : (
