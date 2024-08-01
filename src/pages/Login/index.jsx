@@ -2,19 +2,9 @@ import { Button, Checkbox, Form, Input } from "antd"
 import { login } from "../../request/services"
 import "./index.css"
 import { message } from "antd"
-
-
-const onFinish = async (values) => {
-  const res = await login(values)
-  if (res.message === 'success') {
-    const { accessToken, refreshToken, userInfo } = res.data
-
-    window.localStorage.setItem('access_token', accessToken)
-    window.localStorage.setItem('refresh_token', refreshToken)
-    window.localStorage.setItem('user_info', JSON.stringify(userInfo))
-    message.success('登录成功')
-  }
-}
+import { useCallback } from "react"
+import { useNavigate } from "react-router-dom"
+import { Link } from "react-router-dom"
 
 const layout1 = {
   labelCol: { span: 4 },
@@ -27,6 +17,24 @@ const layout2 = {
 }
 
 export default function Login() {
+  const navigate = useNavigate()
+
+  const onFinish = useCallback(async (values) => {
+    const res = await login(values)
+    if (res.message === "success") {
+      const { accessToken, refreshToken, userInfo } = res.data
+
+      window.localStorage.setItem("access_token", accessToken)
+      window.localStorage.setItem("refresh_token", refreshToken)
+      window.localStorage.setItem("user_info", JSON.stringify(userInfo))
+      message.success("登录成功")
+
+      setTimeout(() => {
+        navigate('/')
+      }, 1500);
+    }
+  }, [])
+
   return (
     <div id="login-container">
       <h1>会议室预订系统</h1>
@@ -49,8 +57,8 @@ export default function Login() {
 
         <Form.Item {...layout2}>
           <div className="links">
-            <a href="">创建账号</a>
-            <a href="">忘记密码</a>
+            <Link to='/register'>创建账号</Link>
+            {/* <Link to='/forgetPassword'>忘记密码</Link> */}
           </div>
         </Form.Item>
 

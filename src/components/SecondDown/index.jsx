@@ -5,11 +5,20 @@ import { useState } from "react"
 const initSecond = 60
 let timr = null
 
-export default function SecondDown() {
+/**
+ * 
+ * @param {onComplete} () => Promise<boolean> 
+ * @returns Promise<boolean> 
+ */
+export default function SecondDown({ onComplete }) {
   const [second, setSecond] = useState(0)
   const init = useRef(initSecond)
   const sendCaptcha = async () => {
     if (second !== 0) return
+
+    // 执行点击逻辑 是否成功发送验证码 决定是否倒计时
+    const flag = await onComplete?.()
+    if (!flag) return
 
     // 倒计时
     init.current = initSecond
