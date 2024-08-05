@@ -4,7 +4,7 @@ import { Upload } from "antd"
 import { useState } from "react"
 
 // 上传图片限制大小 kb
-const limtKB = 50
+const limtKB = 1024 * 1.2
 
 const beforeUpload = (file) => {
   const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png"
@@ -13,7 +13,7 @@ const beforeUpload = (file) => {
   }
   const isLt2M = file.size / 1024 < limtKB
   if (!isLt2M) {
-    message.error("文件不能超过50KB")
+    message.error("文件不能超过1.2M")
   }
   return isJpgOrPng && isLt2M
 }

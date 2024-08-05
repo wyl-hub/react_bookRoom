@@ -5,6 +5,8 @@ import { message } from "antd"
 import { useCallback } from "react"
 import { useNavigate } from "react-router-dom"
 import { Link } from "react-router-dom"
+import { useContext } from "react"
+import { ContextStore } from "../../context"
 
 const layout1 = {
   labelCol: { span: 4 },
@@ -17,6 +19,8 @@ const layout2 = {
 }
 
 export default function Login() {
+  const { contextState, dispatch } = useContext(ContextStore)
+
   const navigate = useNavigate()
 
   const onFinish = useCallback(async (values) => {
@@ -27,10 +31,17 @@ export default function Login() {
       window.localStorage.setItem("access_token", accessToken)
       window.localStorage.setItem("refresh_token", refreshToken)
       window.localStorage.setItem("user_info", JSON.stringify(userInfo))
+      dispatch({
+        type: 'update',
+        payload: {
+          userInfo,
+          menuType: 2
+        }
+      })
       message.success("登录成功")
 
       setTimeout(() => {
-        navigate('/')
+        navigate('/userManager')
       }, 1500);
     }
   }, [])

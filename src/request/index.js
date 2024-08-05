@@ -1,7 +1,6 @@
 import { message } from "antd"
 import axios from "axios"
 import { refreshToken } from "./services"
-import { useNavigate } from "react-router-dom"
 
 export const baseURL = import.meta.env.VITE_APP_URL
 
@@ -62,13 +61,8 @@ class Request {
 
 // 返回登录页面
 function useBackLogin() {
-  window.localStorage.removeItem("access_token")
-  window.localStorage.removeItem("refresh_token")
-  window.localStorage.removeItem("user_info")
   message.error("登录失效，请重新登录")
-  setTimeout(() => {
-    window.location.href = "/login"
-  }, 1500)
+  loginout()
 }
 // 刷新token
 async function getNewToken() {
@@ -82,9 +76,18 @@ async function getNewToken() {
     message.success("重新登录成功")
 
     setTimeout(() => {
-      navigate("/")
+      window.location.href = "/"
     }, 1500)
   }
+}
+// 退出登录
+export function loginout() {
+  window.localStorage.removeItem("access_token")
+  window.localStorage.removeItem("refresh_token")
+  window.localStorage.removeItem("user_info")
+  setTimeout(() => {
+    window.location.href = "/login"
+  }, 1500)
 }
 
 export default new Request()

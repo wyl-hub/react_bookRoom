@@ -4,6 +4,8 @@ import Login from "../pages/Login"
 import Register from "../pages/Register"
 import UpdateInfo from "../pages/UpdateInfo"
 import UpdatePassword from "../pages/UpdatePassword"
+import UserManager from "../pages/UserManager"
+import MeetManager from "../pages/meetManager"
 
 const routes = [
   {
@@ -18,7 +20,15 @@ const routes = [
       {
         path: '/updatePassword',
         element: <UpdatePassword />
-      }
+      },
+      {
+        path: '/meetManager',
+        element: <MeetManager />
+      },
+      {
+        path: '/userManager',
+        element: <UserManager />
+      },
     ],
   },
   {

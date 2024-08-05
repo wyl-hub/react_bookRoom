@@ -8,29 +8,23 @@ import { info, update, upload } from "../../request/services"
 import { baseURL } from "../../request"
 import { useState } from "react"
 import { useEffect } from "react"
-import { Link } from "react-router-dom"
+import { useContext } from "react"
+import { ContextStore } from "../../context"
 
 const layout1 = {
   labelCol: { span: 6 },
   wrapperCol: { span: 18 },
 }
 
-const layout2 = {
-  labelCol: { span: 0 },
-  wrapperCol: { span: 10 },
-}
-
 export default function UpdateInfo() {
+  const { contextState, dispatch } = useContext(ContextStore)
   const [form] = useForm()
   const navigate = useNavigate()
-
   // 数据回显
-  const [userInfo, setUserInfo] = useState({})
   useEffect(() => {
     info().then((res) => {
       if (res.message === "success") {
         const userInfo = res.data
-        setUserInfo(userInfo)
         form.setFieldValue("nickName", userInfo.nickName)
         if (userInfo.headPic) {
           form.setFieldValue("headPic", userInfo.headPic)
@@ -41,6 +35,7 @@ export default function UpdateInfo() {
   }, [])
 
   const [imgUrl, setImgUrl] = useState("")
+  
   const onFinish = useCallback(async (values) => {
     const res = await update(values)
     if (res.message === "success") {
@@ -48,9 +43,15 @@ export default function UpdateInfo() {
       userInfo.headPic = values.headPic
       userInfo.nickName = values.nickName
       window.localStorage.setItem("user_info", JSON.stringify(userInfo))
-
+      dispatch({
+        type: 'update',
+        payload: {
+          userInfo,
+          menuType: 2
+        }
+      })
       setTimeout(() => {
-        navigate("/")
+        navigate("/userManager")
       }, 1500)
     }
   }, [])
@@ -88,15 +89,7 @@ export default function UpdateInfo() {
           <Input />
         </Form.Item>
 
-        <Form.Item {...layout2}>
-          <div className="links">
-            <Link to="/updatePassword">修改密码</Link>
-          </div>
-        </Form.Item>
         <Form.Item {...layout1} label=" ">
-          <Button className="btn" onClick={() => navigate("/")}>
-            返回
-          </Button>
           <Button className="btn" type="primary" htmlType="submit">
             修改
           </Button>
