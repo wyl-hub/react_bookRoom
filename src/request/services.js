@@ -22,6 +22,15 @@ export async function upload(file) {
   return request.post('/user/upload', formData)
 }
 
+export async function getUserList(body) {
+  return await request.post('/user/list', body)
+}
+
+// 冻结用户
+export async function freeze(body) {
+  return await request.post('/user/freeze', body)
+}
+
 // 修改密码
 export async function updatePassword(body) {
   return await request.post('/user/update_passoword', body)

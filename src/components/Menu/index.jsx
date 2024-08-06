@@ -18,16 +18,16 @@ const menu1 = [
 
 const menu2 = [
   {
+    key: "/userManager",
+    label: "用户管理",
+  },
+  {
     key: "/meetManager",
     label: "会议室管理",
   },
   {
     key: "4",
     label: "预定管理",
-  },
-  {
-    key: "/userManager",
-    label: "用户管理",
   },
   {
     key: "6",

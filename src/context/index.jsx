@@ -16,7 +16,10 @@ function reducer(state, action) {
 export const ContextStore = createContext(null)
 
 export const ContextProvider = ({ children }) => {
-  const userInfo = JSON.parse(window.localStorage.getItem("user_info") || {})
+  let userInfo = {}
+  if (window.localStorage.getItem("user_info")) {
+    userInfo = JSON.parse(window.localStorage.getItem("user_info"))
+  }
   const [contextState, dispatch] = useReducer(reducer, {
     userInfo,
     menuType: 2,
