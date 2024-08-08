@@ -17,7 +17,7 @@ export default function UserManage() {
   const [total, setTotal] = useState(0)
 
   useEffect(() => {
-    getList(filterData)
+    getList()
   }, [])
 
   const columns = useMemo(() => [
