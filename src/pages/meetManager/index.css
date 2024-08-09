@@ -1,6 +1,9 @@
 #meetManage-container {
   padding: 20px;
 }
+#meetManage-container .userManage-form {
+  display: flex;
+}
 
 #meetManage-container .meetManage-table {
   margin-top: 20px;

@@ -51,3 +51,28 @@ export async function refreshToken() {
   const refreshToken = window.localStorage.getItem('refresh_token') || ''
   return await request.post('/user/refresh', { refreshToken })
 }
+
+// 获取会议室列表
+export async function getMeetList(body) {
+  return await request.post('/meeting-room/list', body)
+}
+
+// 创建会议室
+export async function createMeetRoom(body) {
+  return await request.post('meeting-room/create', body)
+}
+
+// 根据id查询会议室信息
+export async function getInfoById(id) {
+  return await request.get(`/meeting-room/${id}`)
+}
+
+// 删除会议室
+export async function deleteMeet(id) {
+  return await request.post(`/meeting-room/delete`, { id })
+}
+
+// 修改会议室
+export async function updateMeet(body) {
+  return await request.post('meeting-room/update', body)
+}

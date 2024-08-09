@@ -1,12 +1,14 @@
-import { Table, Badge, Image } from "antd"
+import { Table, Badge, Button } from "antd"
 import "./index.css"
 import { useEffect } from "react"
-import { freeze, getUserList } from "../../request/services"
+import { deleteMeet, getMeetList } from "../../request/services"
 import { useState } from "react"
 import FilterForm from "./components/FilterForm"
 import { removeEmptStr } from "../../util"
-import { baseURL } from "../../request"
 import { useMemo } from "react"
+import { Popconfirm } from "antd"
+import CreateModal from "./components/CreateModal"
+import UpdateModal from "./components/UpdateModal"
 
 export default function UserManage() {
   const [filterData, setFilterData] = useState({
@@ -15,7 +17,11 @@ export default function UserManage() {
   })
   const [tableList, setList] = useState([])
   const [total, setTotal] = useState(0)
-
+  // 创建会议室
+  const [isOpen, setOpen] = useState(false)
+  // 更新会议室 当前更新会议室id
+  const [isUpdate, setUpdate] = useState(false)
+  const [currentId, setCurrentId] = useState(null)
   useEffect(() => {
     getList()
   }, [])
@@ -63,9 +69,27 @@ export default function UserManage() {
       {
         title: "操作",
         render: (_, record) => (
-          <a href="#" onClick={() => {}}>
-            删除
-          </a>
+          <>
+            <Popconfirm
+              title="会议室删除"
+              description="确认删除吗？"
+              onConfirm={() => handleDelete(record.id)}
+              okText="Yes"
+              cancelText="No"
+            >
+              <a href="#">删除</a>
+            </Popconfirm>
+            <br />
+            <a
+              href="#"
+              onClick={() => {
+                setUpdate(true)
+                setCurrentId(record.id)
+              }}
+            >
+              更新
+            </a>
+          </>
         ),
       },
     ],
@@ -91,22 +115,29 @@ export default function UserManage() {
     const params = removeEmptStr(obj)
     // 保存筛选条件
     changFilterForm(params)
-    const res = await getUserList({
+    const res = await getMeetList({
       pageSize: filterData.pageSize,
       ...params,
     })
     if (res.message === "success") {
       const { list, totalCount } = res.data
-      list.forEach((item) => (item.key = item.username))
+      list.forEach((item) => (item.key = item.id))
       setList(list)
       setTotal(totalCount)
     }
   }
-
+  // 删除会议室
+  const handleDelete = async (id) => {
+    const res = await deleteMeet(id)
+    if (res.message === 'success') {
+      getList()
+    }
+  }
   return (
     <div id="meetManage-container">
       <div className="userManage-form">
         <FilterForm getList={getList} />
+        <Button onClick={() => setOpen(true)}>添加会议室</Button>
       </div>
       <div className="meetManage-table">
         <Table
@@ -120,6 +151,19 @@ export default function UserManage() {
           }}
         />
       </div>
+      {/* 创建会议室 */}
+      <CreateModal
+        isOpen={isOpen}
+        handleClose={() => setOpen(false)}
+        getList={getList}
+      />
+      {/* 更新会议室 */}
+      <UpdateModal
+        isOpen={isUpdate}
+        handleClose={() => setUpdate(false)}
+        currentId={currentId}
+        getList={getList}
+      />
     </div>
   )
 }

@@ -4,7 +4,7 @@ import { useState } from "react"
 import { useCallback } from "react"
 
 export default function FilterForm({ getList }) {
-  const searchUser = useCallback(async (values = {}) => {
+  const onSearch = useCallback(async (values = {}) => {
     // 重置页码 查询列表
     getList({
       ...values,
@@ -13,7 +13,7 @@ export default function FilterForm({ getList }) {
   }, [])
   return (
     <Form
-      onFinish={searchUser}
+      onFinish={onSearch}
       name="search"
       layout="inline"
       colon={false}

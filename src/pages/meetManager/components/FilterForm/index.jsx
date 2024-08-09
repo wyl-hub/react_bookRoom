@@ -4,39 +4,30 @@ import { useState } from "react"
 import { useCallback } from "react"
 
 export default function FilterForm({ getList }) {
-  const searchUser = useCallback(async (values = {}) => {
+  const onSearch = useCallback(async (values = {}) => {
     // 重置页码 查询列表
     getList({
       ...values,
-      pageNo: 1
+      pageNo: 1,
     })
   }, [])
   return (
-    <Form
-      onFinish={searchUser}
-      name="search"
-      layout="inline"
-      colon={false}
-    >
-      <Form.Item label="用户名" name="username">
+    <Form onFinish={onSearch} name="search" layout="inline" colon={false}>
+      <Form.Item label="会议室名称" name="name">
         <Input />
       </Form.Item>
 
-      <Form.Item label="昵称" name="nickName">
+      <Form.Item label="容量" name="capacity">
         <Input />
       </Form.Item>
 
-      <Form.Item
-        label="邮箱"
-        name="email"
-        rules={[{ type: "email", message: "请输入合法邮箱地址!" }]}
-      >
+      <Form.Item label="设备" name="equipment">
         <Input />
       </Form.Item>
 
       <Form.Item label=" ">
         <Button type="primary" htmlType="submit">
-          搜索用户
+          搜索
         </Button>
       </Form.Item>
     </Form>
